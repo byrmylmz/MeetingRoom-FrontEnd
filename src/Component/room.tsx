@@ -1,76 +1,57 @@
-import { useState } from "react";
+import Tab from "react-bootstrap/Tab";
+import Tabs from "react-bootstrap/Tabs";
+import { useForm, SubmitHandler } from "react-hook-form";
+import "../style.css";
+
+interface IFormInput {
+  firstName: string;
+  lastName: string;
+  age: number;
+}
 
 function Room() {
-  const [toggleState, setToggleState] = useState<number>(1);
-
-  const toggleTab = (index: number) => {
-    setToggleState(index);
-  };
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors }
+  } = useForm({
+    defaultValues: {
+      example: "",
+      exampleRequired: ""
+    }
+  });
 
   return (
     <>
-      <div className="container">
-        <div className="bloc-tabs">
-          <button
-            className={toggleState === 1 ? "tabs active-tabs" : "tabs"}
-            onClick={() => toggleTab(1)}
-          >
-            Tab 1
-          </button>
-          <button
-            className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
-            onClick={() => toggleTab(2)}
-          >
-            Tab 2
-          </button>
-          <button
-            className={toggleState === 3 ? "tabs active-tabs" : "tabs"}
-            onClick={() => toggleTab(3)}
-          >
-            Tab 3
-          </button>
-        </div>
-
-        <div className="content-tabs">
-          <div
-            className={toggleState === 1 ? "content active-content" : "content"}
-          >
-            <h2>Content 1</h2>
-            <hr />
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati
-              praesentium incidunt quia aspernatur quasi quidem facilis quo
-              nihil vel voluptatum?
-            </p>
-          </div>
-
-          <div
-            className={toggleState === 2 ? "content active-content" : "content"}
-          >
-            <h2>Content 2</h2>
-            <hr />
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente
-              voluptatum qui adipisci.
-            </p>
-          </div>
-
-          <div
-            className={toggleState === 3 ? "content active-content" : "content"}
-          >
-            <h2>Content 3</h2>
-            <hr />
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos sed
-              nostrum rerum laudantium totam unde adipisci incidunt modi alias!
-              Accusamus in quia odit aspernatur provident et ad vel distinctio
-              recusandae totam quidem repudiandae omnis veritatis nostrum
-              laboriosam architecto optio rem, dignissimos voluptatum beatae
-              aperiam voluptatem atque. Beatae rerum dolores sunt.
-            </p>
-          </div>
-        </div>
-      </div>
+      <Tabs
+        defaultActiveKey="profile"
+        id="uncontrolled-tab-example"
+        className="mb-3"
+      >
+        <Tab eventKey="home" title="Home">
+        <form
+      onSubmit={handleSubmit((data) => {
+        alert(JSON.stringify(data));
+      })}
+    >
+      <label>Example</label>
+      <input {...register("example")} defaultValue="test" />
+      <label>ExampleRequired</label>
+      <input
+        {...register("exampleRequired", { required: true, maxLength: 10 })}
+      />
+      {errors.exampleRequired && <p>This field is required</p>}
+      <input type="submit" />
+    </form>
+        </Tab>
+        <Tab eventKey="profile" title="Profile">
+          Tab content for Profile
+        </Tab>
+        <Tab eventKey="contact" title="Contact" disabled>
+          Tab content for Contact
+        </Tab>
+      </Tabs>
     </>
   );
 }
