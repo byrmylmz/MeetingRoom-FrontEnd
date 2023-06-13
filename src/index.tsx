@@ -11,7 +11,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Design from "./Component/design";
 import Integration from "./Component/integration";
 import Room from "./Component/room";
-import Screen from "./Component/screen";
+import Players from "./Component/players";
 import Settings from "./Component/settings";
 
 const router = createBrowserRouter([
@@ -37,8 +37,8 @@ const router = createBrowserRouter([
         element: <Settings/>,
       },
       {
-        path: "/screen",
-        element: <Screen/>,
+        path: "/players",
+        element: <Players/>,
       },
     ],
   },
