@@ -1,5 +1,5 @@
 const settin = () => {
-  return <h1>settin</h1>;
+  return <h1>setting</h1>;
 };
 
 export default settin;
