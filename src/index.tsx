@@ -8,7 +8,6 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Design from "./Component/design";
 import Integration from "./Component/integration";
 import Room from "./Component/room";
 import Players from "./Component/players";
@@ -20,11 +19,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
-      {
-        path: "/design",
-        element: <Design/>,
-      },
-      {
+       {
         path: "/integration",
         element: <Integration/>,
       },
