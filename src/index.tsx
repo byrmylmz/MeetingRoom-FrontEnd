@@ -12,6 +12,7 @@ import Integration from "./Component/integration";
 import Room from "./Component/room";
 import Players from "./Component/players";
 import Settings from "./Component/settings";
+import Roomlist from "./Component/roomlist";
 
 const router = createBrowserRouter([
  
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: "/room",
         element: <Room/>,
+      },
+      {
+        path: "/roomlist",
+        element: <Roomlist/>,
       },
       {
         path: "/settings",
