@@ -1,24 +1,22 @@
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, useFormState } from "react-hook-form";
+import { roomList } from "../datas";
+import { useEffect, useState } from "react";
 
 function Roomlist() {
+  
+  const [rooms,setRooms] = useState<any>([])
 
-    const {
-        register,
-        handleSubmit,
-        setValue,
-        watch,
-        formState: { errors }
-      } = useForm();
-    
-  const onSubmit = (data: any) => {
-    console.log(data);
-  };
-
-
+  useEffect(() => {
+    setRooms(roomList)
+  },[])
+  
   return (
     <>
+      <Button variant="primary" type="button" href="../room">
+        Add Room
+      </Button>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -29,29 +27,18 @@ function Roomlist() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td colSpan={2}>Larry the Bird</td>
-            <td>@twitter</td>
-          </tr>
+          {
+            rooms.map((item:any,index:number) => {
+              return  <tr key={index}>
+              <td>{index + 1}</td>
+              <td>{item.fruit}</td>
+              <td>{item.size}</td>
+              <td>{item.color}</td>
+            </tr>
+            })
+          }
         </tbody>
       </Table>
-
-      <Button variant="primary" type="button" onClick={handleSubmit(onSubmit)}>
-        Save
-      </Button>
     </>
   );
 }

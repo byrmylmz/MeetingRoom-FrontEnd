@@ -1,5 +1,10 @@
-const settin = () => {
-  return <h1>setting</h1>;
+function Settings(){
+  return(
+    <>
+    
+    </>
+  )
+  
 };
 
-export default settin;
+export default Settings;
