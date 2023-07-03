@@ -3,6 +3,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { useState } from "react";
+import Tab from "react-bootstrap/Tab";
+import Tabs from "react-bootstrap/Tabs";
 
 import Modal from "react-bootstrap/Modal";
 
@@ -15,6 +17,9 @@ function Integration() {
     formState: { errors },
   } = useForm();
 
+  const onSubmit = (data: any) => {
+    console.log(data)
+  }
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -22,46 +27,52 @@ function Integration() {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        Launch static backdrop modal
-      </Button>
-
-      <Modal
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
+      <Tabs
+        defaultActiveKey="Main"
+        id="RoomAdd"
+        className="mb-3"
       >
-        <Modal.Header closeButton>
-          <Modal.Title>Modal title</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        <Form.Group className="mb-3" controlId="formBasicRoomName">
-        <Form.Label>Server URL</Form.Label>
-        <Form.Control
-          type="roomname"
-          placeholder="Server URL"
-          {...register("ssURL", { required: true })}
-        />
-        {errors["ssURL"] && (
-          <small className="text-red-600">Room Name is required.</small>
-        )}
-      </Form.Group>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary">Understood</Button>
-        </Modal.Footer>
-      </Modal>
-      <ButtonGroup className="mb-2">
-        <Button>Left</Button>
-        <Button>Middle</Button>
-        <Button>Right</Button>
-      </ButtonGroup>
+        <Tab eventKey="Mintyfi" className="min-h-[400px]" title="Mintyfi">
 
+          <Form.Group className="mb-3" controlId="formBasicRoomName">
+            <Form.Label>Room Name</Form.Label>
+            <Form.Control type="roomname" placeholder="Meeting Room" {...register("roomname", { required: true })} />
+          </Form.Group>
 
+          <Form.Group className="mb-3" controlId="formBasicCapacity">
+            <Form.Label>Capacity</Form.Label>
+            <Form.Control type="capacity" placeholder="Capacity" {...register("capacity")} />
+          </Form.Group>
+        </Tab>
+        <Tab eventKey="Office 365" className="min-h-[400px]" title="Office 365">
+
+          <Form.Group className="mb-3" controlId="formBasicRoomName">
+            <Form.Label>Room Name</Form.Label>
+            <Form.Control type="roomname" placeholder="Meeting Room" {...register("roomname", { required: true })} />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicCapacity">
+            <Form.Label>Capacity</Form.Label>
+            <Form.Control type="capacity" placeholder="Capacity" {...register("capacity")} />
+          </Form.Group>
+        </Tab>
+        <Tab eventKey="GSuite" className="min-h-[400px]" title="GSuite">
+
+          <Form.Group className="mb-3" controlId="formBasicRoomName">
+            <Form.Label>Room Name</Form.Label>
+            <Form.Control type="roomname" placeholder="Meeting Room" {...register("roomname", { required: true })} />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicCapacity">
+            <Form.Label>Capacity</Form.Label>
+            <Form.Control type="capacity" placeholder="Capacity" {...register("capacity")} />
+          </Form.Group>
+        </Tab>
+
+      </Tabs>
+      <Button variant="primary" type="button" onClick={handleSubmit(onSubmit)}>
+        Save
+      </Button>
     </>
   );
 }
