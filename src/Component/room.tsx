@@ -149,9 +149,6 @@ function Room() {
             </Form.Select>
           </Form.Group>
         </Tab>
-        <Tab eventKey="Automation" className="min-h-[400px]" title="Automation">
-          Tab content for Contact
-        </Tab>
       </Tabs>
 
       <Button variant="primary" type="button" onClick={handleSubmit(onSubmit)}>
