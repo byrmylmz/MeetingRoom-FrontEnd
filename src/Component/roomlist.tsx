@@ -21,9 +21,9 @@ function Roomlist() {
         <thead>
           <tr>
             <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
+            <th>Room Name</th>
+            <th>Status</th>
+            <th>Update</th>
           </tr>
         </thead>
         <tbody>
