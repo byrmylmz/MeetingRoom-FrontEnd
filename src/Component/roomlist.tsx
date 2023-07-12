@@ -1,6 +1,6 @@
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-import { useForm, SubmitHandler, useFormState } from "react-hook-form";
+//@ts-ignore
 import { roomList } from "../datas";
 import { useEffect, useState } from "react";
 
@@ -17,22 +17,21 @@ function Roomlist() {
       <Button variant="primary" type="button" href="../room">
         Add Room
       </Button>
-      <Table striped bordered hover>
+      <Table className="table" striped bordered hover>
         <thead>
           <tr>
-            <th>#</th>
             <th>Room Name</th>
-            <th>Status</th>
-            <th>Update</th>
+            <th className=" w-6">Status</th>
+            <th className=" w-6">Update</th>
           </tr>
         </thead>
         <tbody>
           {
             rooms.map((item:any,index:number) => {
               return  <tr key={index}>
-              <td>{index + 1}</td>
               <td>{item.fruit}</td>
-              <td>{item.size}</td>
+              <td> {item?.icon}
+                {item.size}</td>
               <td>{item.color}</td>
             </tr>
             })
