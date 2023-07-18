@@ -13,7 +13,7 @@ export default function App() {
           <ul className="space-y-2 font-medium">
             <li>
               <Link
-                to={`Roomlist`}
+                to={`roomlist`}
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
@@ -34,7 +34,7 @@ export default function App() {
             </li>
             <li>
               <Link
-                to={`Players`}
+                to={`players`}
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
@@ -52,7 +52,7 @@ export default function App() {
             </li>
             <li>
               <Link
-                to={`Integration`}
+                to={`integration`}
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
