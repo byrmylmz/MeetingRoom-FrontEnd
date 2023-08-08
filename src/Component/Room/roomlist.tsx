@@ -1,7 +1,6 @@
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-//@ts-ignore
-import { roomList } from "../datas";
+import { roomList } from "../../datas";
 import { useEffect, useState } from "react";
 
 function Roomlist() {

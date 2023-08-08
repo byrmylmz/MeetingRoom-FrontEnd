@@ -12,10 +12,10 @@ import Integration from "./Component/integration";
 import Room from "./Component/room";
 import Players from "./Component/players";
 import Settings from "./Component/settings";
-import Roomlist from "./Component/roomlist";
+import Roomlist from "./Component/Room/roomlist";
 
 const router = createBrowserRouter([
- 
+
   {
     path: "/",
     element: <App />,
