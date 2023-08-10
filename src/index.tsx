@@ -1,24 +1,25 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import { ChakraProvider } from '@chakra-ui/react'
 
-import Roomlist from "./components/Room/roomlist";
+import RoomsList from "./components/rooms/roomsList";
 import {Provider} from "react-redux";
 import {store} from "./store";
+import Root from "./routes/root";
+import PlayersList from "./components/players/playerList";
 
 const router = createBrowserRouter([
 
     {
         path: "/",
-        element: <App/>,
+        element: <Root/>,
         children: [
 
-
-            {path: "/roomlist", element: <Roomlist/>,},
+            {path: "/rooms", element: <RoomsList/>,},
+            {path: "/players", element: <PlayersList/>,},
 
         ],
     },
@@ -29,9 +30,11 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-    <Provider store={store}>
-        <RouterProvider router={router}/>
-    </Provider>
+    <ChakraProvider>
+        <Provider store={store}>
+            <RouterProvider router={router}/>
+        </Provider>
+    </ChakraProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
