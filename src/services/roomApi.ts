@@ -6,11 +6,9 @@ export const roomApi = _roomApi.injectEndpoints({
 
     endpoints: (builder) => (
         {
-
             getAllRoom: builder.query<IRoom[], void>({
                 query: () => `/room`,
             }),
-
             addRoom: builder.mutation<void, IRoom>({
                 query: room => ({
                     url: `/room`,
@@ -19,8 +17,6 @@ export const roomApi = _roomApi.injectEndpoints({
                 }),
                 invalidatesTags:['Room']
             }),
-
-
 
         })
 })

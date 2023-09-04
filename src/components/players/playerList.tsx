@@ -16,9 +16,7 @@ function RoomsList() {
 
     const initialRef = React.useRef(null)
     const finalRef = React.useRef(null)
-
     const obj = {initialRef: initialRef, finalRef: finalRef, isOpen: isOpen, onOpen: onOpen, onClose: onClose};
-
 
     return (
         <div>
