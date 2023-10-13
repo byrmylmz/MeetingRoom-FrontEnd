@@ -18,7 +18,7 @@ export const calendarApi = createApi({
 
     endpoints: (builder) => ({
         getAllAzure: builder.query<IAzure, void>({
-            query: () => `/calendar/third`,
+            query: () => `/calendar/fifth`,
         }),
     }),
 })
