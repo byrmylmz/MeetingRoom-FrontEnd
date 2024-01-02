@@ -8,19 +8,44 @@ import {
     ModalCloseButton, Button, FormControl, FormLabel, Input,
 } from '@chakra-ui/react'
 import React from "react";
+import {useForm, SubmitHandler} from "react-hook-form";
+import {IRoom} from "../../models/room.model";
+import {useAddRoomMutation, useGetAllRoomQuery} from "../../services/roomApi";
 
-interface IProps{
+interface IProps {
     initialRef: any,
-    finalRef:any,
-    isOpen:any,
-    onClose:any,
+    finalRef: any,
+    isOpen: any,
+    onClose: any,
 }
 
-function AddRoomModal(props:IProps) {
-    const initialRef=props.initialRef;
-    const finalRef=props.finalRef;
-    const isOpen=props.isOpen;
-    const onClose=props.onClose;
+
+function AddRoomModal(props: IProps) {
+    const initialRef = props.initialRef;
+    const finalRef = props.finalRef;
+    const isOpen = props.isOpen;
+    const onClose = props.onClose;
+
+    const [addRoom] = useAddRoomMutation();
+    const { refetch } = useGetAllRoomQuery();
+
+
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: {errors, isSubmitting},
+    } = useForm<IRoom>()
+
+    const onSubmit: SubmitHandler<IRoom> = async (data) => {
+        try {
+            await addRoom(data);
+            await refetch();
+            onClose();
+        } catch (error) {
+            console.error('Error in form submission.', error);
+        }
+    };
 
     return (
         <>
@@ -30,28 +55,32 @@ function AddRoomModal(props:IProps) {
                 isOpen={isOpen}
                 onClose={onClose}
             >
-                <ModalOverlay />
+                <ModalOverlay/>
                 <ModalContent>
-                    <ModalHeader>Add new Room</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody pb={6}>
-                        <FormControl>
-                            <FormLabel>Room name</FormLabel>
-                            <Input ref={initialRef} placeholder='Room name' />
-                        </FormControl>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <ModalHeader>Add new Room</ModalHeader>
+                        <ModalCloseButton/>
+                        <ModalBody pb={6}>
 
-                        <FormControl mt={4}>
-                            <FormLabel>Room Status</FormLabel>
-                            <Input placeholder='Room status' />
-                        </FormControl>
-                    </ModalBody>
+                            <FormControl>
+                                <FormLabel>Room name</FormLabel>
+                                <Input {...register("roomName")} placeholder='Room name'/>
+                            </FormControl>
 
-                    <ModalFooter>
-                        <Button colorScheme='blue' mr={3}>
-                            Save
-                        </Button>
-                        <Button onClick={onClose}>Cancel</Button>
-                    </ModalFooter>
+                            <FormControl mt={4}>
+                                <FormLabel>Room Status</FormLabel>
+                                <Input {...register("roomStatus")} placeholder='Room status'/>
+                            </FormControl>
+
+                        </ModalBody>
+
+                        <ModalFooter>
+                            <Button colorScheme='blue' mr={3} isLoading={isSubmitting} type='submit'>
+                                Save
+                            </Button>
+                            <Button onClick={onClose}>Cancel</Button>
+                        </ModalFooter>
+                    </form>
                 </ModalContent>
             </Modal>
         </>

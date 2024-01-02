@@ -1,6 +1,6 @@
 import {configureStore} from "@reduxjs/toolkit";
 import {roomApi} from "./services/roomApi";
-import {playerApi} from "./services/playerApi";
+import {screenApi} from "./services/screenApi";
 import {calendarApi} from "./services/calendarApi";
 import {pokemonApi} from "./services/pokemon";
 import { setupListeners } from '@reduxjs/toolkit/query'

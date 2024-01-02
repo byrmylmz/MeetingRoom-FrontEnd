@@ -6,7 +6,6 @@ export const azureApi = _azureApi.injectEndpoints({
 
     endpoints: (builder) => (
         {
-
             getAllAzure: builder.query<IAzure[], void>({
                 query: () => `/player`,
             }),
@@ -19,7 +18,6 @@ export const azureApi = _azureApi.injectEndpoints({
                 }),
                 invalidatesTags:['Azure']
             }),
-
 
 
         })

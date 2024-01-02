@@ -1,5 +1,5 @@
-import {Link} from "react-router-dom";
-import {useGetAllPlayerQuery} from "../../services/playerApi";
+import {Link, useParams} from "react-router-dom";
+import {useGetScreensByRoomIdQuery} from "../../services/screenApi";
 import AddRoomModal from "./addPlayerModal";
 import {
     Button,
@@ -8,22 +8,23 @@ import {
 import React from "react";
 import AddPlayerModal from "./addPlayerModal";
 
+
 function RoomsList() {
-
-    const {data,isSuccess} = useGetAllPlayerQuery();
-
     const {isOpen, onOpen, onClose} = useDisclosure()
-
     const initialRef = React.useRef(null)
     const finalRef = React.useRef(null)
     const obj = {initialRef: initialRef, finalRef: finalRef, isOpen: isOpen, onOpen: onOpen, onClose: onClose};
+
+    const { roomId }= useParams();
+
+    const {data, isSuccess,refetch} = useGetScreensByRoomIdQuery(roomId!);
 
     return (
         <div>
             <AddPlayerModal {...obj} />
             <div className="w-full">
                 <div className="sm:flex items-center justify-between py-2">
-                    <Button colorScheme='teal' onClick={onOpen}>Add New Player</Button>
+                    <Button colorScheme='teal' onClick={onOpen}>Add New Screen</Button>
                 </div>
                 <div className="bg-white shadow-md rounded ">
                     <table className="min-w-max w-full table-auto">
@@ -44,7 +45,7 @@ function RoomsList() {
                                         <div className="mr-2">
                                             <img className="w-8 h-8" src="https://img.icons8.com/color/ipad.png" alt="" />
                                         </div>
-                                        <span className="font-medium">{player.playerName}</span>
+                                        <span className="font-medium">{player.screenName}</span>
                                     </div>
                                 </td>
                                 <td className="py-3 px-6 text-left">

@@ -10,9 +10,7 @@ import {
 function RoomsList() {
 
     const {data, isSuccess} = useGetAllRoomQuery();
-
     const {isOpen, onOpen, onClose} = useDisclosure()
-
     const initialRef = React.useRef(null)
     const finalRef = React.useRef(null)
 
@@ -76,7 +74,7 @@ function RoomsList() {
                                 </td>
                                 <td className="py-3 px-6 text-center">
                                     <div className="flex item-center justify-center">
-                                        <Link to={`${room.id}/floors`}>
+                                        <Link to={`${room.id}/screens`}>
                                             <div
                                                 className="w-5 mr-2 transform hover:text-purple-500 hover:scale-125 hover:cursor-pointer">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

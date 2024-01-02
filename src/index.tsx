@@ -9,7 +9,8 @@ import RoomsList from "./components/rooms/roomsList";
 import {Provider} from "react-redux";
 import {store} from "./store";
 import Root from "./routes/root";
-import PlayersList from "./components/players/playerList";
+import PlayersList from "./components/players/screensList";
+import PlayersListByRoom from "./components/players/screensListByRoom";
 import Integration from "./components/integration/integration";
 
 const router = createBrowserRouter([
@@ -20,6 +21,8 @@ const router = createBrowserRouter([
         children: [
 
             {path: "/rooms", element: <RoomsList/>,},
+            {path:"/rooms/:roomId/screens",element:<PlayersListByRoom/>},
+
             {path: "/players", element: <PlayersList/>,},
             {path: "/Integration", element: <Integration/>,},
 
