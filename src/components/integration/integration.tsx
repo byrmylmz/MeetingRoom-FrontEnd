@@ -36,7 +36,7 @@ const Integration = () => {
             console.log("socket connection integration.tsx",socket.connected);
         });
 
-        socket.on('get_message', (data) => {
+        socket.on('exchange', (data) => {
             console.log('Received message from server:', data);
         });
 
@@ -65,7 +65,6 @@ const Integration = () => {
             "type": "CLIENT",
             "message": "toolbarStatus"
         });
-
     }
 
     return (
