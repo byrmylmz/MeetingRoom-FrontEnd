@@ -16,8 +16,15 @@ export const roomApi = _roomApi.injectEndpoints({
                     method: 'POST',
                     body: {...room}
                 }),
-                invalidatesTags:['Room']
+
             }),
+
+            deleteRoom: builder.mutation<void,number>({
+                query:(roomId)=>({
+                    url: `/room/${roomId}`,
+                    method: 'DELETE',
+                })
+            })
 
         })
 })
@@ -25,4 +32,5 @@ export const roomApi = _roomApi.injectEndpoints({
 export const {
     useGetAllRoomQuery,
     useAddRoomMutation,
+    useDeleteRoomMutation
 } = roomApi;

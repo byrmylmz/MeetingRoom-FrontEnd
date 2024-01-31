@@ -1,5 +1,5 @@
 import React from "react";
-import {useGetAllRoomQuery} from "../../services/roomApi";
+import {useDeleteRoomMutation, useGetAllRoomQuery} from "../../services/roomApi";
 import {Link} from "react-router-dom";
 import AddRoomModal from "./addRoomModal";
 import {
@@ -9,13 +9,22 @@ import {
 
 function RoomsList() {
 
-    const {data, isSuccess} = useGetAllRoomQuery();
     const {isOpen, onOpen, onClose} = useDisclosure()
     const initialRef = React.useRef(null)
     const finalRef = React.useRef(null)
-
     const obj = {initialRef: initialRef, finalRef: finalRef, isOpen: isOpen, onOpen: onOpen, onClose: onClose};
 
+    const {data, isSuccess,refetch} = useGetAllRoomQuery();
+    const[deleteRoom]=useDeleteRoomMutation();
+    const deleteHandler=async(roomId:number)=>{
+        try{
+            await deleteRoom(roomId)
+            await refetch();
+        }catch (error){
+            console.log('Error in deleting room',error)
+        }
+
+    }
     return (
         <div>
             <AddRoomModal {...obj}/>
@@ -96,8 +105,8 @@ function RoomsList() {
                                                 </svg>
                                             </div>
                                         </Link>
-                                        {/*onClick={()=>{deleteHandler(room.id)}}*/}
-                                        <div
+
+                                        <div  onClick={()=>{deleteHandler(room.id)}}
                                             className="w-5 mr-2 transform hover:text-purple-500 hover:scale-125 hover:cursor-pointer">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                  stroke="currentColor">

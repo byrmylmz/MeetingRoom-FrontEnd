@@ -8,9 +8,10 @@ import {
     ModalCloseButton, Button, FormControl, FormLabel, Input,
 } from '@chakra-ui/react'
 import React from "react";
-import {useForm, SubmitHandler} from "react-hook-form";
-import {IRoom} from "../../models/room.model";
-import {useAddRoomMutation, useGetAllRoomQuery} from "../../services/roomApi";
+import {useAddScreenMutation, useGetAllScreensQuery, useGetScreensByRoomIdQuery} from "../../services/screenApi";
+import {SubmitHandler, useForm} from "react-hook-form";
+import {IScreen} from "../../models/screen.model";
+import {useParams} from "react-router-dom";
 
 interface IProps {
     initialRef: any,
@@ -19,33 +20,30 @@ interface IProps {
     onClose: any,
 }
 
-
-function AddRoomModal(props: IProps) {
+function AddScreenModal(props: IProps) {
     const initialRef = props.initialRef;
     const finalRef = props.finalRef;
     const isOpen = props.isOpen;
     const onClose = props.onClose;
 
-    const [addRoom] = useAddRoomMutation();
-    const { refetch } = useGetAllRoomQuery();
+    const { roomId }= useParams();
+    const [addScreen] = useAddScreenMutation();
+    const {refetch} = useGetScreensByRoomIdQuery(roomId!);
+
+    const {register, handleSubmit,  formState: {isSubmitting},} = useForm<IScreen>();
 
 
-    const {
-        register,
-        handleSubmit,
-        watch,
-        formState: {isSubmitting},
-    } = useForm<IRoom>()
-
-    const onSubmit: SubmitHandler<IRoom> = async (data) => {
+    const onSubmit:  SubmitHandler<IScreen> = async (data) => {
+        console.log(data)
+        let dataWithRoomId={...data, roomId:roomId };
         try {
-            await addRoom(data);
+            await addScreen(dataWithRoomId);
             await refetch();
             onClose();
         } catch (error) {
-            console.error('Error in form submission.', error);
+            console.log('Error in form submission.', error)
         }
-    };
+    }
 
     return (
         <>
@@ -58,20 +56,19 @@ function AddRoomModal(props: IProps) {
                 <ModalOverlay/>
                 <ModalContent>
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <ModalHeader>Add new Room</ModalHeader>
+
+                        <ModalHeader>Add new Screen</ModalHeader>
                         <ModalCloseButton/>
                         <ModalBody pb={6}>
-
                             <FormControl>
-                                <FormLabel>Room name</FormLabel>
-                                <Input {...register("roomName")} placeholder='Room name'/>
+                                <FormLabel>Screen name</FormLabel>
+                                <Input {...register("screenName")} placeholder='Screen name'/>
                             </FormControl>
 
                             <FormControl mt={4}>
-                                <FormLabel>Room Status</FormLabel>
-                                <Input {...register("roomStatus")} placeholder='Room status'/>
+                                <FormLabel>Screen Type</FormLabel>
+                                <Input {...register("screenType")} placeholder='Screen type'/>
                             </FormControl>
-
                         </ModalBody>
 
                         <ModalFooter>
@@ -87,4 +84,4 @@ function AddRoomModal(props: IProps) {
     )
 }
 
-export default AddRoomModal;
+export default AddScreenModal;

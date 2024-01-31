@@ -19,6 +19,7 @@
     "@types/node": "^16.18.25",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.1",
+    "axios": "^1.6.7",
     "framer-motion": "^10.15.1",
     "http-proxy-middleware": "^2.0.6",
     "localforage": "^1.10.0",

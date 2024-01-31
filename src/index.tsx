@@ -9,9 +9,10 @@ import RoomsList from "./components/rooms/roomsList";
 import {Provider} from "react-redux";
 import {store} from "./store";
 import Root from "./routes/root";
-import PlayersList from "./components/players/screensList";
-import PlayersListByRoom from "./components/players/screensListByRoom";
 import Integration from "./components/integration/integration";
+import ScreenListByRoom from "./components/screens/screensListByRoom";
+import ScreenIntegration from "./components/integration/screenIntegration";
+import M365Redirect from "./components/integration/M365Redirect";
 
 const router = createBrowserRouter([
 
@@ -21,9 +22,11 @@ const router = createBrowserRouter([
         children: [
 
             {path: "/rooms", element: <RoomsList/>,},
-            {path:"/rooms/:roomId/screens",element:<PlayersListByRoom/>},
+            {path:"/rooms/:roomId/screens",element:<ScreenListByRoom/>},
+            {path:"/rooms/:roomId/screens/:screenId/integration",element:<ScreenIntegration/>},
+            {path:"/redirect",element:<M365Redirect/>},
 
-            {path: "/players", element: <PlayersList/>,},
+
             {path: "/Integration", element: <Integration/>,},
 
         ],

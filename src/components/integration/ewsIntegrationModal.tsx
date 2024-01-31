@@ -11,6 +11,9 @@ import React from "react";
 import {useForm, SubmitHandler} from "react-hook-form";
 import {IRoom} from "../../models/room.model";
 import {useAddRoomMutation, useGetAllRoomQuery} from "../../services/roomApi";
+import {Iews} from "../../models/ews.model";
+import {useGetEwsIntegrationQuery, useUpdateEwsIntegrationMutation} from "../../services/screenApi";
+import {useParams} from "react-router-dom";
 
 interface IProps {
     initialRef: any,
@@ -20,27 +23,31 @@ interface IProps {
 }
 
 
-function AddRoomModal(props: IProps) {
+function EwsIntegrationModal(props: IProps) {
     const initialRef = props.initialRef;
     const finalRef = props.finalRef;
     const isOpen = props.isOpen;
     const onClose = props.onClose;
 
     const [addRoom] = useAddRoomMutation();
-    const { refetch } = useGetAllRoomQuery();
+    const {refetch:roomRefetch} = useGetAllRoomQuery();
+    const {screenId} = useParams<{screenId:string}>();
 
-
+    const {data:ewsData, isSuccess,refetch:ewsRefetch,} = useGetEwsIntegrationQuery(screenId!);
+    const [updateEwsIntegration]=useUpdateEwsIntegrationMutation();
     const {
         register,
         handleSubmit,
         watch,
         formState: {isSubmitting},
-    } = useForm<IRoom>()
+    } = useForm<Iews>()
 
-    const onSubmit: SubmitHandler<IRoom> = async (data) => {
+    const onSubmit: SubmitHandler<Iews> = async (data) => {
+        const dataWithId={...data,screenId:screenId};
+
         try {
-            await addRoom(data);
-            await refetch();
+            await updateEwsIntegration(dataWithId);
+            await ewsRefetch();
             onClose();
         } catch (error) {
             console.error('Error in form submission.', error);
@@ -58,25 +65,30 @@ function AddRoomModal(props: IProps) {
                 <ModalOverlay/>
                 <ModalContent>
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <ModalHeader>Add new Room</ModalHeader>
+                        <ModalHeader>Ews Integration Information</ModalHeader>
                         <ModalCloseButton/>
                         <ModalBody pb={6}>
 
                             <FormControl>
-                                <FormLabel>Room name</FormLabel>
-                                <Input {...register("roomName")} placeholder='Room name'/>
+                                <FormLabel>User Name</FormLabel>
+                                <Input {...register("userName")} defaultValue={ewsData == null ? '' :ewsData.userName}/>
                             </FormControl>
 
                             <FormControl mt={4}>
-                                <FormLabel>Room Status</FormLabel>
-                                <Input {...register("roomStatus")} placeholder='Room status'/>
+                                <FormLabel>Password</FormLabel>
+                                <Input {...register("password")} defaultValue={ewsData == null ? '' :ewsData.password}/>
+                            </FormControl>
+
+                            <FormControl mt={4}>
+                                <FormLabel>Domain</FormLabel>
+                                <Input {...register("domain")} defaultValue={ewsData == null ? '' :ewsData.domain}/>
                             </FormControl>
 
                         </ModalBody>
 
                         <ModalFooter>
                             <Button colorScheme='blue' mr={3} isLoading={isSubmitting} type='submit'>
-                                Save
+                                Update
                             </Button>
                             <Button onClick={onClose}>Cancel</Button>
                         </ModalFooter>
@@ -87,4 +99,4 @@ function AddRoomModal(props: IProps) {
     )
 }
 
-export default AddRoomModal;
+export default EwsIntegrationModal;

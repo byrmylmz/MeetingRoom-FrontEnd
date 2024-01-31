@@ -1,27 +1,38 @@
 import {Link, useParams} from "react-router-dom";
-import {useGetScreensByRoomIdQuery} from "../../services/screenApi";
-import AddRoomModal from "./addPlayerModal";
+import {useDeleteScreenMutation, useGetScreensByRoomIdQuery} from "../../services/screenApi";
 import {
     Button,
     useDisclosure
 } from '@chakra-ui/react'
 import React from "react";
-import AddPlayerModal from "./addPlayerModal";
+import AddScreenModal from "./addScreenModal";
 
 
-function RoomsList() {
+function ScreenListByRoom() {
     const {isOpen, onOpen, onClose} = useDisclosure()
     const initialRef = React.useRef(null)
     const finalRef = React.useRef(null)
     const obj = {initialRef: initialRef, finalRef: finalRef, isOpen: isOpen, onOpen: onOpen, onClose: onClose};
 
     const { roomId }= useParams();
-
     const {data, isSuccess,refetch} = useGetScreensByRoomIdQuery(roomId!);
+
+    const[deleteScreen]=useDeleteScreenMutation();
+
+
+    const deleteHandler=async(screenId:number)=>{
+        try{
+            await deleteScreen(screenId)
+            await refetch();
+        }catch (error){
+            console.log(error)
+        }
+
+    }
 
     return (
         <div>
-            <AddPlayerModal {...obj} />
+            <AddScreenModal {...obj} />
             <div className="w-full">
                 <div className="sm:flex items-center justify-between py-2">
                     <Button colorScheme='teal' onClick={onOpen}>Add New Screen</Button>
@@ -38,14 +49,14 @@ function RoomsList() {
                         </tr>
                         </thead>
                         <tbody className="text-gray-600 text-sm font-light">
-                        {isSuccess && data.map(player=>(
-                            <tr className="border-b border-gray-200 hover:bg-gray-100" key={player.id} >
+                        {isSuccess && data.map(screen=>(
+                            <tr className="border-b border-gray-200 hover:bg-gray-100" key={screen.id} >
                                 <td className="py-3 px-6 text-left whitespace-nowrap">
                                     <div className="flex items-center">
                                         <div className="mr-2">
                                             <img className="w-8 h-8" src="https://img.icons8.com/color/ipad.png" alt="" />
                                         </div>
-                                        <span className="font-medium">{player.screenName}</span>
+                                        <span className="font-medium">{screen.screenName}</span>
                                     </div>
                                 </td>
                                 <td className="py-3 px-6 text-left">
@@ -68,7 +79,7 @@ function RoomsList() {
                                 </td>
                                 <td className="py-3 px-6 text-center">
                                     <div className="flex item-center justify-center">
-                                        <Link to={`${player.id}/floors`}>
+                                        <Link to={`${screen.id}/integration`}>
                                             <div className="w-5 mr-2 transform hover:text-purple-500 hover:scale-125 hover:cursor-pointer">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -76,15 +87,15 @@ function RoomsList() {
                                                 </svg>
                                             </div>
                                         </Link>
-                                        <Link to={`update/${player.id}`}>
+                                        <Link to={`update/${screen.id}`}>
                                             <div className="w-5 mr-2 transform hover:text-purple-500 hover:scale-125 hover:cursor-pointer">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                                 </svg>
                                             </div>
                                         </Link>
-                                        {/*onClick={()=>{deleteHandler(player.id)}}*/}
-                                        <div  className="w-5 mr-2 transform hover:text-purple-500 hover:scale-125 hover:cursor-pointer">
+
+                                        <div  onClick={()=>{deleteHandler(screen.id)}}  className="w-5 mr-2 transform hover:text-purple-500 hover:scale-125 hover:cursor-pointer">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                             </svg>
@@ -100,4 +111,4 @@ function RoomsList() {
         </div>
     );
 }
-export default RoomsList;
+export default ScreenListByRoom;
