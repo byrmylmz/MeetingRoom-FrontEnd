@@ -9,9 +9,11 @@ const M365Redirect = () => {
     const nav = useNavigate();
     const [state, setState] = useState()
     const [code, setCode] = useState()
-
+    const [screenId, setScreenId] = useState();
+    console.log(screenId)
 
     useEffect(() => {
+
 
         const fetchData = async () => {
             if (window.location.search) {
@@ -23,15 +25,19 @@ const M365Redirect = () => {
                 // console.log(params)
                 setCode(params['code']);
                 setState(params['state'].replaceAll('-', '/'));
+                const state = params['state'].split('-');
+                setScreenId(state[3]);
             }
         };
         fetchData();
+
 
         const fetchToken = async () => {
             try {
                 const response = await axios.get('/api/calendar/fourth', {
                     headers: {
                         'Authorization': code, // code değişkenini kullanarak Authorization başlığını ekledik
+                        'screenId':screenId,
                         'Content-Type': 'application/json'
                     }
                 });

@@ -97,7 +97,7 @@ function RoomsList() {
                                         </Link>
                                         <Link to={`update/${room.id}`}>
                                             <div
-                                                className="w-5 mr-2 transform hover:text-purple-500 hover:scale-125 hover:cursor-pointer">
+                                                className="w-5  mr-2 transform hover:text-purple-500 hover:scale-125 hover:cursor-pointer">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                      stroke="currentColor">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"

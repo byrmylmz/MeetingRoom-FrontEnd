@@ -12,6 +12,7 @@ export const screenApi = _playerApi.injectEndpoints({
             getAllScreens: builder.query<IScreen[], void>({
                 query: () => `/screens`,
             }),
+
             getScreensById: builder.query<IScreen, string>({
                 query: (screenId) => `/screens/${screenId}`
             }),
@@ -22,7 +23,6 @@ export const screenApi = _playerApi.injectEndpoints({
                     method: 'POST',
                     body: screen
                 }),
-
             }),
 
             getScreensByRoomId: builder.query<IScreen[], string>({
