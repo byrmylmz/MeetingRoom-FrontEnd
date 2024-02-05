@@ -33,7 +33,7 @@ const ScreenIntegration = () => {
 
     console.log(screenData)
     const toolbar = (id: number, status: boolean) => {
-        const data = {id: id, status: status}
+        const data = {id: id, status: status, screenId:screenId}
         updateToolbar(data)
         setToolbarStatus(data.status);
     };
@@ -86,8 +86,8 @@ const ScreenIntegration = () => {
             <a href={`https://login.microsoftonline.com/common/oauth2/v2.0/authorize?` +
                 `client_id=469e5942-bf76-44f3-8c77-272988660c36` +
                 `&response_type=code` +
-                // `&redirect_uri=http://localhost:3000/redirect` +
-                `&redirect_uri=https://screenapi.mintyfi.com/redirect` +
+                `&redirect_uri=http://localhost:3000/redirect` +
+                // `&redirect_uri=https://screenapi.mintyfi.com/redirect` +
                 `&response_mode=query` +
                 `&scope=openid%20offline_access%20https%3A%2F%2Fgraph.microsoft.com%2Fcalendars.read%20https%3A%2F%2Fgraph.microsoft.com%2Fuser.read` +
                 `&state=rooms-${roomId}-screens-${screenId}-integration&prompt=consent`} rel="noopener noreferrer">
