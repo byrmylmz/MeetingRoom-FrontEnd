@@ -99,6 +99,8 @@ const ScreenIntegration = () => {
                 toolbar(1, !toolbarStatus)
             }} leftIcon={<ViewOffIcon/>} colorScheme='blue'>Toolbar On/Off</Button>
 
+            <Button onClick={() =>sendMessage()} leftIcon={<ViewOffIcon/>} colorScheme='blue'>Test socket</Button>
+
             <Text fontSize={32}><b>Screen name: </b> {isScreenSuccess && screenData.screenName}</Text>
             <p><b>Toolbar:</b> {toolbarStatus ? "Open" : "Close"}</p>
         </div>
