@@ -33,7 +33,7 @@ const tabsData: Tab[] = [
 ];
 
 function RoomList() {
-  const [activeTab, setActiveTab] = useState(tabsData[0]);
+  const [activeTab, setActiveTab] = useState(tabsData[1]);
   const changeTab = (tab: any) => {
     setActiveTab(tab);
   };
