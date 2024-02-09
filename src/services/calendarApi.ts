@@ -17,12 +17,8 @@ export const calendarApi = createApi({
     }),
 
     endpoints: (builder) => ({
-        getAllAzure: builder.query<IAzure, void>({
-            query: () => `/calendar/fifth`,
-        }),
+
     }),
 })
 
-// Export hooks for usage in functional components, which are
-// auto-generated based on the defined endpoints
-export const { useGetAllAzureQuery } = calendarApi
+

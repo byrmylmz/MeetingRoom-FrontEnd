@@ -1,5 +1,5 @@
 export interface IEwsIntegration {
-    screenId:string | undefined,
+    roomId:string | undefined,
     userName:string,
     password:string,
     domain:string,

@@ -1,66 +1,66 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import {Button, space, Text, useDisclosure} from "@chakra-ui/react";
 import axios from "axios";
-import {log} from "util";
-import config from "tailwindcss/defaultConfig";
 
 const M365Redirect = () => {
-    const nav = useNavigate();
-    const [state, setState] = useState()
-    const [code, setCode] = useState()
-    const [screenId, setScreenId] = useState();
-    console.log(screenId)
-
-    useEffect(() => {
-
-
-        const fetchData = async () => {
-            if (window.location.search) {
-                let params: any = window.location.search.substring(1).split('&').reduce(function (result: any, item) {
-                    let parts = item.split('=');
-                    result[parts[0]] = parts[1];
-                    return result;
-                }, {});
-                // console.log(params)
-                setCode(params['code']);
-                setState(params['state'].replaceAll('-', '/'));
-                const state = params['state'].split('-');
-                setScreenId(state[3]);
-            }
-        };
-        fetchData();
-
+    const navigate = useNavigate();
+    const params = new URLSearchParams(window.location.search);
+    const stateParam = params.get('state');
+    const codeParam = params.get('code');
+    if (codeParam && stateParam) {
+        const stateParts = stateParam.replaceAll('-', '/').split('/');
+        console.log("code", codeParam);
+        console.log("state Parameter", stateParam);
+        console.log("room id", stateParts[1]);
 
         const fetchToken = async () => {
             try {
-                const response = await axios.get('/api/calendar/fourth', {
+                await axios.get('/api/m365/integration', {
                     headers: {
-                        'Authorization': code, // code değişkenini kullanarak Authorization başlığını ekledik
-                        'screenId':screenId,
+                        'Authorization': codeParam,
+                        'roomId': stateParts[1],
                         'Content-Type': 'application/json'
                     }
                 });
-                console.log(response.data);
             } catch (error) {
                 console.error(error);
             }
         };
         fetchToken();
 
-        const timeoutId = setTimeout(() => {
-            nav(`/${state}`);
-        }, 3000);
-
-        return () => clearTimeout(timeoutId);
-
-    }, [nav, state])
+        setTimeout(() => {
+            navigate(`/${stateParam.replaceAll('-', '/')}`);
+        }, 2000);
+    }
 
     return (
         <div>
-            <Text fontSize={32}> Please wait!! We are preparing your integration.</Text>
-            <p><b>Code From URL:</b> {code}</p>
-            <p><b>State From URL:</b> {state}</p>
+            <div className="flex justify-center mt-56">
+                <div aria-label="Loading..." role="status" className="flex items-center space-x-2">
+                    <svg className="h-40 w-40 animate-spin stroke-gray-500" viewBox="0 0 256 256">
+                        <line x1="128" y1="32" x2="128" y2="64" strokeLinecap="round" strokeLinejoin="round"
+                              strokeWidth="24"></line>
+                        <line x1="195.9" y1="60.1" x2="173.3" y2="82.7" strokeLinecap="round" strokeLinejoin="round"
+                              strokeWidth="24"></line>
+                        <line x1="224" y1="128" x2="192" y2="128" strokeLinecap="round" strokeLinejoin="round"
+                              strokeWidth="24">
+                        </line>
+                        <line x1="195.9" y1="195.9" x2="173.3" y2="173.3" strokeLinecap="round" strokeLinejoin="round"
+                              strokeWidth="24"></line>
+                        <line x1="128" y1="224" x2="128" y2="192" strokeLinecap="round" strokeLinejoin="round"
+                              strokeWidth="24">
+                        </line>
+                        <line x1="60.1" y1="195.9" x2="82.7" y2="173.3" strokeLinecap="round" strokeLinejoin="round"
+                              strokeWidth="24"></line>
+                        <line x1="32" y1="128" x2="64" y2="128" strokeLinecap="round" strokeLinejoin="round"
+                              strokeWidth="24"></line>
+                        <line x1="60.1" y1="60.1" x2="82.7" y2="82.7" strokeLinecap="round" strokeLinejoin="round"
+                              strokeWidth="24">
+                        </line>
+                    </svg>
+                    <span className="text-4xl font-medium text-gray-500">Entegrasyon Sağlanıyor...</span>
+                </div>
+            </div>
         </div>
     );
 };

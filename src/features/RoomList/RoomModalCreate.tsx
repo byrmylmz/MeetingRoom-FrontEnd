@@ -61,22 +61,12 @@ const RoomModalCreate: React.FC<RoomModalCreateProps> = ({
               <Input {...register("roomName")} placeholder="Room name" />
             </FormControl>
             <FormControl>
-              <FormLabel>
-                <Text fontSize="sm">Room Status</Text>
+              <FormLabel className="text-xs">
+                <Text fontSize="sm">Location</Text>
               </FormLabel>
-              <Select
-                placeholder="Select..."
-                {...register("roomStatus", { required: true })}
-                bg={errors.roomStatus ? "red.100" : "white"}
-              >
-                <option value="busy">Busy</option>
-                <option value="available">Available</option>
-                <option value="maintenance">Maintenance</option>
-              </Select>
-              {errors.roomStatus && (
-                <span className="text-red-500">This field is required</span>
-              )}
+              <Input {...register("location")} placeholder="Location" />
             </FormControl>
+
           </ModalBody>
 
           <ModalFooter>

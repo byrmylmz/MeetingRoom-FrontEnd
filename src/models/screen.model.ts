@@ -3,9 +3,5 @@ export interface IScreen {
     screenType: string;
     screenName: string;
     RoomId:number;
-    mqttId: number;
-    ewsCalendar: number;
-    m365Calendar: number;
-    googleCalendar: number;
     toolbar_status: boolean;
 }

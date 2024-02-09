@@ -1,7 +1,5 @@
 import {baseApiSlice} from "./baseApiSlice";
 import {IScreen} from "../models/screen.model";
-import {log} from "util";
-import {IEwsIntegration} from "../models/ewsIntegration.model";
 
 
 const _playerApi = baseApiSlice.enhanceEndpoints({addTagTypes: ['Screen']})
@@ -36,17 +34,8 @@ export const screenApi = _playerApi.injectEndpoints({
                 })
             }),
 
-            getEwsIntegration: builder.query<IEwsIntegration, string>({
-                query: (screenId) => `/screens/${screenId}/ews`
-            }),
 
-            updateEwsIntegration: builder.mutation<void, IEwsIntegration>({
-                query: ews => ({
-                    url: `/screens/${ews.screenId}/ews`,
-                    method: 'POST',
-                    body: ews
-                }),
-            })
+
 
 
         })
@@ -58,7 +47,7 @@ export const {
     useAddScreenMutation,
     useGetScreensByRoomIdQuery,
     useDeleteScreenMutation,
-    useGetEwsIntegrationQuery,
-    useUpdateEwsIntegrationMutation
+
+
 
 } = screenApi;

@@ -41,8 +41,7 @@ const AddScreenModal: React.FC<ScreenModalCreateProps> = ({
   } = useForm<IScreen>();
 
   const onSubmit: SubmitHandler<IScreen> = async (data) => {
-    console.log(data);
-    let dataWithRoomId = { ...data, roomId: roomId };
+   let dataWithRoomId = { ...data, roomId: roomId };
     try {
       await addScreen(dataWithRoomId);
       await refetch();
